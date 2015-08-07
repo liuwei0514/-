@@ -97,9 +97,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     width: 100%;
     height: 100%;
 }
-#app-index-footer{
+.tabs-icon-bottom{
     .tab-item{
-        color:$stable;
-        font-size: 16px;
+        .icon{
+            line-height: 32px;
+        }
     }
 }
+
+
+

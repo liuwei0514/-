@@ -23,8 +23,9 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 })
 
 .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
-    $ionicConfigProvider.views.forwardCache(true);
-    // $ionicConfigProvider.views.maxCache(5000);
+    // $ionicConfigProvider.views.forwardCache(true);
+    $ionicConfigProvider.backButton.text('')
+    // $ionicConfigProvider.views.maxCache(10);
     $stateProvider
         .state('app', {
             url: '/app',
@@ -33,39 +34,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             controller: 'AppCtrl'
         })
 
-        .state('app.home', {
-            url: '/home',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/home.html',
-                    controller: 'HomeCtrl'
-                }
-            }
-        })
-        .state('app.home.index', {
-            url: '/index',
-            views: {
-                'indexContent': {
-                    templateUrl: 'templates/jhslist.html',
-                    controller: 'IndexCtrl'
-                }
-            }
-        })
         .state('app.jhs', {
             url: '/jhs',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/home.html',
-                    controller: 'JhsCtrl'
-                }
-            }
-        })
-        .state('app.jhs.index', {
-            url: '/index',
-            views: {
-                'indexContent': {
-                    templateUrl: 'templates/jhslist.html',
-                    controller: 'IndexCtrl'
+                    controller: 'HomeCtrl'
                 }
             }
         })
@@ -74,16 +48,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             views: {
                 'menuContent': {
                     templateUrl: 'templates/home.html',
-                    controller: 'QiangCtrl'
-                }
-            }
-        })
-        .state('app.qiang.index', {
-            url: '/index',
-            views: {
-                'indexContent': {
-                    templateUrl: 'templates/qianglist.html',
-                    controller: 'IndexCtrl'
+                    controller: 'HomeCtrl'
                 }
             }
         })
@@ -92,16 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             views: {
                 'menuContent': {
                     templateUrl: 'templates/home.html',
-                    controller: 'QingCtrl'
-                }
-            }
-        })
-        .state('app.qing.index', {
-            url: '/index',
-            views: {
-                'indexContent': {
-                    templateUrl: 'templates/qinglist.html',
-                    controller: 'IndexCtrl'
+                    controller: 'HomeCtrl'
                 }
             }
         })
@@ -110,21 +66,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             views: {
                 'menuContent': {
                     templateUrl: 'templates/home.html',
-                    controller: 'TejiaCtrl'
-                }
-            }
-        })
-        .state('app.tejia.index', {
-            url: '/index',
-            views: {
-                'indexContent': {
-                    templateUrl: 'templates/tejialist.html',
-                    controller: 'IndexCtrl'
+                    controller: 'HomeCtrl'
                 }
             }
         })
         .state('app.item', {
-            url: '/item/:id/:title/:price',
+            url: '/item/:id/:title/:price/:picUrl',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/item.html',
@@ -135,5 +82,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         ;
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/home/index');
+    $urlRouterProvider.otherwise('/app/jhs');
 });

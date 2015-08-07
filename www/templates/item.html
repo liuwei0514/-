@@ -3,8 +3,7 @@
         <iframe class="app-item-iframe" ng-style="appItemIframeStyle" ng-src="{{itemUrl}}" class="app-item-iframe" frameborder="0"></iframe>
     </ion-content>
     <div class="bar bar-footer">
-        <button ng-click="back()" class="button button-large pull-left iconfont icon-back"></button>
-        <h1 class="title stable">拍下自动变成{{price}}元哦~</h1>
-        <button class="button button-large pull-right iconfont icon-share"></button>
+        <button ng-click="$ionicGoBack()" class="button button-large pull-left ion-android-arrow-back"></button>
+        <h1 ng-click="show()" class="title stable">分享给好友</h1>
     </div>
-</ion-view>	
+</ion-view>
