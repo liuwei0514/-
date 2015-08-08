@@ -1,4 +1,4 @@
-<a ng-repeat="product in data[category._id].results" class="item app-item col col-50" ui-sref="app.item({ id: product.itemId,title: product.title ,price: product.discountPrice,picUrl: product.baseinfo.picUrl })"><img class="list-img" ng-src="{{product.activityPicUrl}}_200x200Q90.jpg_.webp" alt="">
+<a ng-repeat="product in data[category._id].results" class="item app-item col col-50" ui-sref="app.item({ id: product.itemId,title: product.title ,price: product.discountPrice,picUrl: product.baseinfo.picUrl })"><img class="list-img" ng-src="http://{{product.activityPicUrl}}_200x200Q90.jpg_.webp" alt="">
     <h2></i>{{product.title}}</h2>
     <p class="list-price buy ">
         <span class="price-new"><i>￥</i>{{product.discountPrice}}</span>

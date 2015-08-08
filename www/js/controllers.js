@@ -42,23 +42,23 @@ angular.module('starter.controllers', ['ngSanitize'])
         return dataURL;
     }
 
-
+    $scope.shareUrl = "http://www.800-taobao.com/";
     $scope.show = function() {
 
         // Show the action sheet
         var hideSheet = $ionicActionSheet.show({
             buttons: [{
-                text: '<i class="icon-weixin iconfont icon-action"></i> 分享到微信好友'
+                text: '<i class="weixin icon-action"></i> 微信好友'
             }, {
-                text: '<i class="icon-pengyou iconfont icon-action"></i> 分享到微信朋友圈'
+                text: '<i class="pengyou  icon-action"></i> 朋友圈'
             }, {
-                text: '<i class="icon-qq iconfont icon-action"></i> 分享到QQ'
+                text: '<i class="qq  icon-action"></i> QQ好友'
             }, {
-                text: '<i class="icon-qq1 iconfont icon-action"></i> 分享到QZone'
+                text: '<i class="qzone  icon-action"></i> QZone'
             }, {
-                text: '<i class="icon-qq iconfont icon-action"></i> QQ收藏'
+                text: '<i class="qq  icon-action"></i> QQ收藏'
             }, {
-                text: '<i class="icon-weibo iconfont icon-action"></i> 分享到微博'
+                text: '<i class="weibo  icon-action"></i> 新浪微博'
             }],
             titleText: '分享给好友',
             cancelText: '取消',
@@ -73,9 +73,9 @@ angular.module('starter.controllers', ['ngSanitize'])
                         title: $scope.title,
                         description: $scope.title,
                         thumbData: $scope.encodeImageUri("http:" + $scope.picUrl + "_90x90Q90.jpg_.webp"),
-                        url: 'http://www.800-taobao.com/'
+                        url: $scope.shareUrl
                     }, WeChat.Scene.session, function() {
-                        alert('分享成功~');
+                        // alert('分享成功~');
                     }, function(reason) {
                         alert(reason);
                     });
@@ -90,18 +90,18 @@ angular.module('starter.controllers', ['ngSanitize'])
                         title: $scope.title,
                         description: $scope.title,
                         thumbData: $scope.encodeImageUri("http:" + $scope.picUrl + "_90x90Q90.jpg_.webp"),
-                        url: 'http://www.800-taobao.com/'
+                        url: $scope.shareUrl
                     }, WeChat.Scene.timeline, function() {
-                        alert('分享成功~');
+                        // alert('分享成功~');
                     }, function(reason) {
                         alert(reason);
                     });
 
-                    WeChat.isInstalled(function(isInstalled) {
-                        alert('WeChat installed=' + isInstalled);
-                    }, function(reason) {
-                        alert(reason);
-                    });
+                    // WeChat.isInstalled(function(isInstalled) {
+                    //     alert('WeChat installed=' + isInstalled);
+                    // }, function(reason) {
+                    //     alert(reason);
+                    // });
 
                     // }, function(reason) {
                     //     alert(reason);
@@ -110,18 +110,15 @@ angular.module('starter.controllers', ['ngSanitize'])
                 if (index == 2) {
                     var args = {};
 
-                    args.url = "http://www.baidu.com";
-                    args.title = "This is cordova QZone share ";
-                    args.description = "This is cordova QZone share ";
-                    var imgs = ['https://www.baidu.com/img/bdlogo.png',
-                        'https://www.baidu.com/img/bdlogo.png',
-                        'https://www.baidu.com/img/bdlogo.png'
-                    ];
+                    args.url = $scope.shareUrl;
+                    args.title = $scope.title;
+                    args.description = $scope.title;
+                    var imgs = [$scope.picUrl];
                     args.imageUrl = imgs;
 
                     args.appName = "转一下 赚一下";
                     YCQQ.shareToQQ(function() {
-                        alert("share success");
+                        // alert("share success");
                     }, function(failReason) {
                         alert(failReason);
                     }, args);
@@ -129,16 +126,15 @@ angular.module('starter.controllers', ['ngSanitize'])
 
                 if (index == 3) {
                     var args = {};
-                    args.url = "http://www.baidu.com";
-                    args.title = "This is cordova QZone share ";
-                    args.description = "This is cordova QZone share ";
-                    var imgs = ['https://www.baidu.com/img/bdlogo.png',
-                        'https://www.baidu.com/img/bdlogo.png',
-                        'https://www.baidu.com/img/bdlogo.png'
-                    ];
+
+                    args.url = $scope.shareUrl;
+                    args.title = $scope.title;
+                    args.description = $scope.title;
+                    var imgs = [$scope.picUrl];
+
                     args.imageUrl = imgs;
                     YCQQ.shareToQzone(function() {
-                        alert("share success");
+                        // alert("share success");
                     }, function(failReason) {
                         alert(failReason);
                     }, args);
@@ -146,13 +142,14 @@ angular.module('starter.controllers', ['ngSanitize'])
 
                 if (index == 4) {
                     var args = {};
-                    args.url = "http://www.baidu.com";
-                    args.title = "这个是cordova QQ 收藏测试";
-                    args.description = "这个是cordova QQ 收藏测试";
-                    args.imageUrl = "https://www.baidu.com/img/bdlogo.png";
-                    args.appName = "cordova—QQ";
+
+                    args.url = $scope.shareUrl;
+                    args.title = $scope.title;
+                    args.description = $scope.title;
+                    args.imageUrl = $scope.picUrl;
+                    args.appName = "转一下 赚一下";
                     YCQQ.addToQQFavorites(function() {
-                        alert("share success");
+                        // alert("share success");
                     }, function(failReason) {
                         alert(failReason);
                     }, args);
@@ -160,13 +157,13 @@ angular.module('starter.controllers', ['ngSanitize'])
                 if (index == 5) {
                     YCWeibo.checkClientInstalled(function() {
                         var args = {};
-                        args.url = "http://www.baidu.com";
-                        args.title = "Baidu";
-                        args.description = "This is Baidu";
-                        args.imageUrl = "https://www.baidu.com/img/bdlogo.png"; //if you don't have imageUrl,for android http://www.sinaimg.cn/blog/developer/wiki/LOGO_64x64.png will be the defualt one
-                        args.defaultText = "";
+                        args.url = $scope.shareUrl;
+                        args.title = $scope.title;
+                        args.description = $scope.title;
+                        args.imageUrl = $scope.picUrl;
+                        args.defaultText = "转一下 赚一下";
                         YCWeibo.shareToWeibo(function() {
-                            alert("share success");
+                            // alert("share success");
                         }, function(failReason) {
                             alert(failReason);
                         }, args);
