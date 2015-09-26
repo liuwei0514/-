@@ -56,6 +56,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 templateUrl: 'templates/menu.html',
                 controller: 'AppCtrl'
             })
+            .state('taobaoid', {
+                url: '/taobaoid',
+                templateUrl: 'templates/taobaoid.html',
+                controller: 'TaobaoidCtrl'
+            })
 
         .state('app.jhs', {
                 url: '/jhs',
@@ -101,7 +106,29 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         controller: 'ItemCtrl'
                     }
                 }
-            });
+            })
+            .state('app.geren', {
+                url: '/geren',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/geren.html',
+                        controller: 'GerenCtrl'
+                    }
+                }
+            })
+            .state('app.rewards', {
+                url: '/rewards',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/rewards.html',
+                        controller: 'RewardsCtrl'
+                    }
+                }
+            })
+
+
+            
+            ;
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/jhs');
@@ -129,8 +156,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             },
             init: function(notificationCallback) {
                 console.log('jpush: start init-----------------------');
-
-
 
                 try {
                     window.plugins.jPushPlugin.init();

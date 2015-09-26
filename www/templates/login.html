@@ -1,0 +1,69 @@
+<ion-modal-view>
+    <ion-view>
+        <ion-content class="app-login">
+            <div class="app-login-logo">
+                <img src="../img/taobaoid.png" alt="">
+            </div>
+            <form ng-submit="doLogin()" name="loginForm" class="app-login-form">
+                <input type="text" ng-model="loginData.taobaoid" name="taobaoid" ng-required="true" class="app-login-form-input" placeholder="请输入您的淘宝账号">
+                <input type="tel" name="loginTel" ng-model="loginData.tel" ng-required="true" class="app-login-form-input" ng-pattern="/^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" placeholder="请输入您的手机号码">
+                <button class="" ng-disabled="!loginForm.loginTel.$valid || loginData.waiting" ng-click="sendCaptcha()">
+                    {{loginData.captchaText}}
+                </button>
+                <input type="number" name="loginCaptcha" placeholder="请输入您的验证码" class="app-login-form-input" ng-model="loginData.captcha" ng-required="true">
+                <button class="" ng-disabled="!loginData.passCorrect" type="submit">点击确认</button>
+            </form>
+            <!-- <form ng-submit="doLogin()" name="loginForm">
+                <div class="list">
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input type="tel" name="loginTel" ng-model="loginData.tel" ng-required="true" ng-pattern="/^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" placeholder="手机号码">
+                        </label>
+                    </div>
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <input type="number" name="loginCaptcha" placeholder="验证码" ng-model="loginData.captcha" ng-required="true">
+                        </label>
+                        <button class="button button-small" ng-disabled="!loginForm.loginTel.$valid || loginData.waiting" ng-click="sendCaptcha()">
+                            {{loginData.captchaText}}
+                        </button>
+                    </div>
+                    <span>{{loginForm.loginTel.$valid}}</span>
+                    <label class="item">
+                        <button class="button button-block" ng-disabled="" type="submit">登陆</button>
+                    </label>
+                </div>
+            </form> -->
+        </ion-content>
+    </ion-view>
+    <!-- 
+    <ion-header-bar>
+        <h1 class="title">登陆</h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeLogin()">关闭</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="doLogin()" name="loginForm">
+            <div class="list">
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
+                        <input type="tel" name="loginTel" ng-model="loginData.tel" ng-required="true" ng-pattern="/^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"  placeholder="手机号码">
+                    </label>
+                </div>
+                <div class="item item-input-inset">
+                    <label class="item-input-wrapper">
+                        <input type="number" name="loginCaptcha" placeholder="验证码" ng-model="loginData.captcha" ng-required="true" >
+                    </label>
+                    <button class="button button-small" ng-disabled="!loginForm.loginTel.$valid || loginData.waiting" ng-click="sendCaptcha()">
+                        {{loginData.captchaText}}
+                    </button>
+                </div>
+                <span>{{loginForm.loginTel.$valid}}</span>
+                <label class="item">
+                    <button class="button button-block" ng-disabled="" type="submit">登陆</button>
+                </label>
+            </div>
+        </form>
+    </ion-content> -->
+</ion-modal-view>

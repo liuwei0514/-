@@ -1,0 +1,14 @@
+<ion-view>
+    <ion-content class="app-login">
+        <div class="app-login-logo">
+            <img src="../img/taobaoid.png" alt="">
+        </div>
+        <form ng-submit="createUser()" name="appTaobaoidForm" class="app-login-form">
+            <div class="app-login-form-label">请输入您的淘宝账号</div>
+            <input type="text" ng-model="taobaoid" name="taobaoid" ng-required="true" class="app-login-form-input" placeholder="">
+            <a class="" ng-click="createUser(taobaoid)" ng-disabled="!appTaobaoidForm.taobaoid.$valid ">
+                点击确认
+            </a>
+        </form>
+    </ion-content>
+</ion-view>

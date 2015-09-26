@@ -142,3 +142,99 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         }
     }
 }
+
+.menu {
+    .scroll-content {
+        .item {
+            .item-content {
+                color: $stable;
+                .iconfont {
+                    color: $stable;
+                    font-size: 2em;
+                }
+            }
+        }
+    }
+}
+
+.app-login {
+    background-color: #ff4304;
+    .app-login-logo {
+        text-align: center;
+        margin-top: 20%;
+        img {
+            width: 50%;
+        }
+    }
+    .app-login-form {
+        text-align: center;
+        .app-login-form-label {
+            width: 100%;
+        }
+        .app-login-form-input {
+            width: 80%;
+            padding-left: 1em;
+            font-size: 1em;
+            margin: 0.5em 10%;
+        }
+        button {
+            background-color: none;
+            line-height: 2em;
+            font-size: 1.3em;
+            color: #000;
+            text-decoration: underline;
+            background: none;
+            border: 0;
+        }
+        button:disabled {
+            color: #ccc;
+        }
+    }
+}
+
+.app-rewards {
+    text-align: center;
+    .app-rewards-color {
+        h4 {
+            line-height: 2em;
+        }
+        div {
+            font-size: 0.5em;
+            span {
+                font-size: 5.5em;
+                color: red;
+            }
+            margin-bottom: 2em;
+        }
+    }
+    .app-rewards-list {
+        background-color: #fbe5b8;
+        color: #666;
+    }
+    .app-rewards-title {
+        text-align: center;
+        line-height: 2em;
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+    .row-valid {
+        background-color: red;
+        padding: 0.2em;
+        color: white;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
-var urlRoot = "http://data.800-taobao.com/api/v2";
-// var urlRoot = "http://127.0.0.1:3000/api/v2";
+// var urlRoot = "http://data.800-taobao.com/api/v2";
+var urlRoot = "http://127.0.0.1:3000/api/v2";
 var urlJhs = urlRoot + "/jhs";
 var urlQiang = urlRoot + "/qiang";
 var urlQing = urlRoot + "/qing";
@@ -8,19 +8,161 @@ var urlJhsCategories = urlRoot + "/jhscategories";
 var urlQiangCategories = urlRoot + "/qiangcategories";
 var urlQingCategories = urlRoot + "/qingcategories";
 var urlTejiaCategories = urlRoot + "/tejiacategories";
+var urlCreateUser = urlRoot + "/AppUser";
+var urlRewards = urlRoot + "/Reward";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http) {
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+    // With the new view caching in Ionic, Controllers are only called
+    // when they are recreated or on app start, instead of every page change.
+    // To listen for when this page is active (for example, to refresh data),
+    // listen for the $ionicView.enter event:
+    // $scope.$on('$ionicView.enter', function(e) {
+    //     // console.log(e);
+    //     var appUser = window.localStorage.getItem("appUser");
+    //     if (!appUser == true) {
+    //         $scope.login();
+    //     }
+    // });
 
+
+    // $scope.$watch('loginForm.loginTel.$valid', function(validity) {
+    //     $scope.loginData.captchaDisabled = !validity;
+    // });
+
+
+    // Form data for the login modal
+    $scope.loginData = {
+        captchaText: "获取验证码",
+        waiting: false,
+        waitingTime: 0
+    };
+
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+        var appUser = window.localStorage.getItem("appUser");
+        if (!appUser == true) {
+            $scope.login();
+        }
+    });
+
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.sendCaptcha = function() {
+        $scope.loginData.waiting = true;
+        $scope.loginData.waitingTime = 60;
+        $scope.loginData.captchaValue = 1111;
+        $interval(function() {
+            if ($scope.loginData.waitingTime > 0) {
+                $scope.loginData.waitingTime = $scope.loginData.waitingTime - 1;
+                $scope.loginData.captchaText = "重新获取(" + $scope.loginData.waitingTime + ")";
+            } else {
+                $scope.loginData.captchaText = "获取验证码";
+                $scope.loginData.waiting = false;
+            }
+        }, 1000, 61);
+    };
+
+
+    $scope.$watch('loginData.captcha', function() {
+        if ($scope.loginData.captcha) {
+            if ($scope.loginData.captchaValue == $scope.loginData.captcha && $scope.loginData.tel && $scope.loginData.taobaoid)
+                $scope.loginData.passCorrect = true;
+            else
+                $scope.loginData.passCorrect = false;
+        }
+    });
+
+    // Open the login modal
+    $scope.login = function() {
+        $scope.modal.show();
+    };
+
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function() {
+
+        $http.post(urlCreateUser, {
+            taobaoid: $scope.loginData.taobaoid,
+            tel: $scope.loginData.tel,
+            captcha: $scope.loginData.captcha
+        }).
+        success(function(data, status, headers, config) {
+            console.log(data);
+            localStorage["appUser"] = JSON.stringify(data.appUser);
+            localStorage["rewards"] = JSON.stringify(data.rewards);
+            // $state.go();
+            // var cars = JSON.parse(localStorage["mycars"]);
+            // $scope.appUser = data.appUser;
+            // $scope.rewards = data.rewards;
+            $scope.closeLogin();
+        }).
+        error(function(data, status, headers, config) {
+            //
+        });
+
+    };
 })
+
+.controller('TaobaoidCtrl', function($scope, $stateParams, $ionicPopup, $http) {
+        $scope.createUser = function(taobaoid) {
+
+            $http.post(urlCreateUser, {
+                taobaoid: taobaoid
+            }).
+            success(function(data, status, headers, config) {
+                console.log(data);
+                localStorage["appUser"] = JSON.stringify(data.appUser);
+                localStorage["rewards"] = JSON.stringify(data.rewards);
+                // $state.go();
+                // var cars = JSON.parse(localStorage["mycars"]);
+                // $scope.appUser = data.appUser;
+                // $scope.rewards = data.rewards;
+            }).
+            error(function(data, status, headers, config) {
+                //
+            });
+        };
+
+    })
+    .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http) {
+        $scope.appUser = JSON.parse(localStorage["appUser"]);
+        $http.get(urlRewards + "/" + $scope.appUser._id).
+        success(function(data, status, headers, config) {
+            var rewards = data.rewards;
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth()+2;
+            var reward = {
+                "amount": 0,
+                "month": month,
+                "year": year,
+                "type": "invalid"
+            };
+            rewards.push(reward);
+            $scope.rewards = rewards;
+        }).
+        error(function(data, status, headers, config) {
+            //
+        });
+
+    })
+
 
 .controller('ItemCtrl', function($scope, $stateParams, $sce, $ionicActionSheet) {
     $scope.width = window.innerWidth;
     $scope.height = window.innerHeight;
     $scope.appItemIframeStyle = {
         'height': ($scope.height - 44 - 49) + 'px'
+            // 'height': '100%'
     };
     $scope.title = $stateParams.title;
     $scope.price = $stateParams.price;
@@ -178,6 +320,13 @@ angular.module('starter.controllers', ['ngSanitize'])
     };
     // hideSheet();
 
+})
+
+.controller('GerenCtrl', function($scope, $http, $state) {
+    var appUser = window.localStorage.getItem("appUser");
+    if (!appUser == true) {
+        $scope.login();
+    }
 })
 
 .controller('HomeCtrl', function($scope, $http, $ionicScrollDelegate, $stateParams, $location, $ionicSlideBoxDelegate, $state) {

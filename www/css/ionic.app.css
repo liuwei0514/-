@@ -7756,3 +7756,59 @@ a.button {
 .platform-android .action-sheet-group .weibo {
   background: url(../img/png_icons/rounded_icons/sina_weibo_R@2x.png) 50% 50% no-repeat;
   background-size: contain; }
+
+.menu .scroll-content .item .item-content {
+  color: #FF5400; }
+  .menu .scroll-content .item .item-content .iconfont {
+    color: #FF5400;
+    font-size: 2em; }
+
+.app-login {
+  background-color: #ff4304; }
+  .app-login .app-login-logo {
+    text-align: center;
+    margin-top: 20%; }
+    .app-login .app-login-logo img {
+      width: 50%; }
+  .app-login .app-login-form {
+    text-align: center; }
+    .app-login .app-login-form .app-login-form-label {
+      width: 100%; }
+    .app-login .app-login-form .app-login-form-input {
+      width: 80%;
+      padding-left: 1em;
+      font-size: 1em;
+      margin: 0.5em 10%; }
+    .app-login .app-login-form button {
+      background-color: none;
+      line-height: 2em;
+      font-size: 1.3em;
+      color: #000;
+      text-decoration: underline;
+      background: none;
+      border: 0; }
+    .app-login .app-login-form button:disabled {
+      color: #ccc; }
+
+.app-rewards {
+  text-align: center; }
+  .app-rewards .app-rewards-color h4 {
+    line-height: 2em; }
+  .app-rewards .app-rewards-color div {
+    font-size: 0.5em;
+    margin-bottom: 2em; }
+    .app-rewards .app-rewards-color div span {
+      font-size: 5.5em;
+      color: red; }
+  .app-rewards .app-rewards-list {
+    background-color: #fbe5b8;
+    color: #666; }
+  .app-rewards .app-rewards-title {
+    text-align: center;
+    line-height: 2em;
+    font-weight: bold;
+    font-size: 1.5em; }
+  .app-rewards .row-valid {
+    background-color: red;
+    padding: 0.2em;
+    color: white; }

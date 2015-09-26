@@ -7,7 +7,8 @@ angular.module('starter')
             if (diff > 0) {
                 return "剩"+parseInt(diff / 86400000)+"天";
             } else {
-                return "已过期";
+                return "";
+                // return "已过期";
             }
         }
     })
