@@ -19,14 +19,10 @@ angular.module('starter.controllers', ['ngSanitize'])
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    // $scope.$on('$ionicView.enter', function(e) {
-    //     // console.log(e);
-    //     var appUser = window.localStorage.getItem("appUser");
-    //     if (!appUser == true) {
-    //         $scope.login();
-    //     }
-    // });
-
+    $scope.$on('$ionicView.enter', function(e,state) {
+        console.log(state);
+        TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
+    });
 
     // $scope.$watch('loginForm.loginTel.$valid', function(validity) {
     //     $scope.loginData.captchaDisabled = !validity;

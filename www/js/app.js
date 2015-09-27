@@ -25,6 +25,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
     $ionicPlatform.ready(function() {
+
+
+        TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
+
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.zhuan647378" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>转一下</name>
+  <name>看到</name>
   <description>
-        “转一下”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买以及一键分享。
+        “看到”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买以及一键分享。
     </description>
   <author email="liuweinot@163.com" href="http://www.800-taobao.com/">
       Cowboy Studio
