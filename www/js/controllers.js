@@ -1,5 +1,5 @@
-// var urlRoot = "http://data.800-taobao.com/api/v2";
-var urlRoot = "http://127.0.0.1:3000/api/v2";
+var urlRoot = "http://data.800-taobao.com/api/v2";
+// var urlRoot = "http://127.0.0.1:3000/api/v2";
 var urlJhs = urlRoot + "/jhs";
 var urlQiang = urlRoot + "/qiang";
 var urlQing = urlRoot + "/qing";
@@ -13,7 +13,7 @@ var urlRewards = urlRoot + "/Reward";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $interval, $http) {
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http,$ionicPlatform,$state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -21,7 +21,9 @@ angular.module('starter.controllers', ['ngSanitize'])
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e,state) {
         console.log(state);
-        TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
+        $ionicPlatform.ready(function() {
+            window.plugins.TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
+        });
     });
 
     // $scope.$watch('loginForm.loginTel.$valid', function(validity) {
@@ -95,7 +97,7 @@ angular.module('starter.controllers', ['ngSanitize'])
             console.log(data);
             localStorage["appUser"] = JSON.stringify(data.appUser);
             localStorage["rewards"] = JSON.stringify(data.rewards);
-            // $state.go();
+            $state.go("app.rewards");
             // var cars = JSON.parse(localStorage["mycars"]);
             // $scope.appUser = data.appUser;
             // $scope.rewards = data.rewards;
@@ -118,7 +120,6 @@ angular.module('starter.controllers', ['ngSanitize'])
                 console.log(data);
                 localStorage["appUser"] = JSON.stringify(data.appUser);
                 localStorage["rewards"] = JSON.stringify(data.rewards);
-                // $state.go();
                 // var cars = JSON.parse(localStorage["mycars"]);
                 // $scope.appUser = data.appUser;
                 // $scope.rewards = data.rewards;
@@ -129,7 +130,7 @@ angular.module('starter.controllers', ['ngSanitize'])
         };
 
     })
-    .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http) {
+    .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http,$ionicActionSheet) {
         $scope.appUser = JSON.parse(localStorage["appUser"]);
         $http.get(urlRewards + "/" + $scope.appUser._id).
         success(function(data, status, headers, config) {
@@ -150,6 +151,55 @@ angular.module('starter.controllers', ['ngSanitize'])
             //
         });
 
+
+        $scope.shareUrl = "http://800-taobao.com/wx/index.html#"+$scope.appUser._id;
+        $scope.title = "看到";
+        $scope.description = "“看到”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买。";
+        // $scope.description = "";
+        $scope.show = function() {
+            // Show the action sheet
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [{
+                    text: '<i class="weixin icon-action"></i> 微信好友'
+                }, {
+                    text: '<i class="pengyou  icon-action"></i> 朋友圈'
+                }],
+                titleText: '分享给好友',
+                cancelText: '取消',
+                cancel: function() {
+                    // add cancel code..
+                },
+                buttonClicked: function(index) {
+                    if (index == 0) {
+                        // WeChat.isInstalled(function(isInstalled) {
+                        // navigator.notification.alert(installed);
+                        WeChat.share({
+                            title: $scope.title,
+                            description: $scope.description,
+                            url: $scope.shareUrl
+                        }, WeChat.Scene.session, function() {
+                            // navigator.notification.alert('分享成功~');
+                        }, function(reason) {
+                            console.log(reason);
+                        });
+                        
+                    }
+                    if (index == 1) {
+                        WeChat.share({
+                            title: $scope.title,
+                            description: $scope.description,
+                            url: $scope.shareUrl
+                        }, WeChat.Scene.timeline, function() {
+                            // navigator.notification.alert('分享成功~');
+                        }, function(reason) {
+                            console.log(reason);
+                        });
+                    }
+                    return true;
+
+                }
+            });
+        };
     })
 
 
@@ -180,23 +230,18 @@ angular.module('starter.controllers', ['ngSanitize'])
         return dataURL;
     }
 
-    $scope.shareUrl = "http://www.800-taobao.com/";
-    $scope.show = function() {
+    $scope.appUser = JSON.parse(localStorage["appUser"]);
+    $scope.shareUrl = "http://800-taobao.com/wx/index.html#"+$scope.appUser._id;
+    $scope.shareTitle = "看到";
+    $scope.description = "“看到”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买。";
 
+    $scope.show = function() {
         // Show the action sheet
         var hideSheet = $ionicActionSheet.show({
             buttons: [{
                 text: '<i class="weixin icon-action"></i> 微信好友'
             }, {
                 text: '<i class="pengyou  icon-action"></i> 朋友圈'
-            }, {
-                text: '<i class="qq  icon-action"></i> QQ好友'
-            }, {
-                text: '<i class="qzone  icon-action"></i> QZone'
-            }, {
-                text: '<i class="qq  icon-action"></i> QQ收藏'
-            }, {
-                text: '<i class="weibo  icon-action"></i> 新浪微博'
             }],
             titleText: '分享给好友',
             cancelText: '取消',
@@ -206,107 +251,26 @@ angular.module('starter.controllers', ['ngSanitize'])
             buttonClicked: function(index) {
                 if (index == 0) {
                     // WeChat.isInstalled(function(isInstalled) {
-                    // alert(installed);
+                    // navigator.notification.alert(installed);
                     WeChat.share({
-                        title: $scope.title,
-                        description: $scope.title,
-                        thumbData: $scope.encodeImageUri("http:" + $scope.picUrl + "_90x90Q90.jpg_.webp"),
+                        title: $scope.shareTitle,
+                        description: $scope.description,
                         url: $scope.shareUrl
                     }, WeChat.Scene.session, function() {
-                        // alert('分享成功~');
+                        // navigator.notification.alert('分享成功~');
                     }, function(reason) {
-                        alert(reason);
+                        console.log(reason);
                     });
-                    // }, function(reason) {
-                    //     alert(reason);
-                    // });
                 }
                 if (index == 1) {
-                    // WeChat.isInstalled(function(isInstalled) {
-                    // alert(installed);
                     WeChat.share({
-                        title: $scope.title,
-                        description: $scope.title,
-                        thumbData: $scope.encodeImageUri("http:" + $scope.picUrl + "_90x90Q90.jpg_.webp"),
+                        title: $scope.shareTitle,
+                        description: $scope.description,
                         url: $scope.shareUrl
                     }, WeChat.Scene.timeline, function() {
-                        // alert('分享成功~');
+                        // navigator.notification.alert('分享成功~');
                     }, function(reason) {
-                        alert(reason);
-                    });
-
-                    // WeChat.isInstalled(function(isInstalled) {
-                    //     alert('WeChat installed=' + isInstalled);
-                    // }, function(reason) {
-                    //     alert(reason);
-                    // });
-
-                    // }, function(reason) {
-                    //     alert(reason);
-                    // });
-                }
-                if (index == 2) {
-                    var args = {};
-
-                    args.url = $scope.shareUrl;
-                    args.title = $scope.title;
-                    args.description = $scope.title;
-                    var imgs = [$scope.picUrl];
-                    args.imageUrl = imgs;
-
-                    args.appName = "转一下 赚一下";
-                    YCQQ.shareToQQ(function() {
-                        // alert("share success");
-                    }, function(failReason) {
-                        alert(failReason);
-                    }, args);
-                }
-
-                if (index == 3) {
-                    var args = {};
-
-                    args.url = $scope.shareUrl;
-                    args.title = $scope.title;
-                    args.description = $scope.title;
-                    var imgs = [$scope.picUrl];
-
-                    args.imageUrl = imgs;
-                    YCQQ.shareToQzone(function() {
-                        // alert("share success");
-                    }, function(failReason) {
-                        alert(failReason);
-                    }, args);
-                }
-
-                if (index == 4) {
-                    var args = {};
-
-                    args.url = $scope.shareUrl;
-                    args.title = $scope.title;
-                    args.description = $scope.title;
-                    args.imageUrl = $scope.picUrl;
-                    args.appName = "转一下 赚一下";
-                    YCQQ.addToQQFavorites(function() {
-                        // alert("share success");
-                    }, function(failReason) {
-                        alert(failReason);
-                    }, args);
-                }
-                if (index == 5) {
-                    YCWeibo.checkClientInstalled(function() {
-                        var args = {};
-                        args.url = $scope.shareUrl;
-                        args.title = $scope.title;
-                        args.description = $scope.title;
-                        args.imageUrl = $scope.picUrl;
-                        args.defaultText = "转一下 赚一下";
-                        YCWeibo.shareToWeibo(function() {
-                            // alert("share success");
-                        }, function(failReason) {
-                            alert(failReason);
-                        }, args);
-                    }, function() {
-                        console.log('请先下载安装微博！');
+                        console.log(reason);
                     });
                 }
                 return true;

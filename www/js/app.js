@@ -18,16 +18,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
         // here add your code
         //ios
-        if (true) {
-            window.alert(notification);
-        }
+        // if (true) {
+        //     navigator.notification.alert(notification);
+        // }
     };
 
 
     $ionicPlatform.ready(function() {
 
 
-        TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
 
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -37,9 +36,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
         if (window.cordova && window.cordova.plugins.Keyboard) {
             window.plugins.jPushPlugin.init();
+            window.plugins.TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
 
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
+            window.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            window.plugins.Keyboard.disableScroll(true);
 
         }
         if (window.StatusBar) {
@@ -154,7 +154,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             },
             check: function() {
                 if (window.jpush && push) {
-                    plugins.jPushPlugin.receiveNotificationIniOSCallback(window.jpush);
+                    window.plugins.jPushPlugin.receiveNotificationIniOSCallback(window.jpush);
                     window.jpush = null;
                 }
             },
