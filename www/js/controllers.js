@@ -1,5 +1,5 @@
-// var urlRoot = "http://data.800-taobao.com/api/v2";
-var urlRoot = "http://127.0.0.1:3000/api/v2";
+var urlRoot = "http://data.800-taobao.com/api/v2";
+// var urlRoot = "http://127.0.0.1:3000/api/v2";
 var urlJhs = urlRoot + "/jhs";
 var urlQiang = urlRoot + "/qiang";
 var urlQing = urlRoot + "/qing";
