@@ -15,7 +15,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         var notification = angular.fromJson(data);
         //app 是否处于正在运行状态
         var isActive = notification.notification;
-
         // here add your code
         //ios
         // if (true) {
@@ -25,22 +24,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
     $ionicPlatform.ready(function() {
-
-
-
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
-
         //初始化
         Push.init(notificationCallback);
 
         if (window.cordova && window.cordova.plugins.Keyboard) {
             window.plugins.jPushPlugin.init();
             window.plugins.TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
-
             window.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             window.plugins.Keyboard.disableScroll(true);
-
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
@@ -66,7 +59,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 controller: 'TaobaoidCtrl'
             })
 
-        .state('app.jhs', {
+            .state('app.ziying', {
+                url: '/ziying',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/ziying.html',
+                        controller: 'ZiyingCtrl'
+                    }
+                }
+            })
+            .state('app.index', {
+                url: '/index',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/index.html',
+                        controller: 'IndexCtrl'
+                    }
+                }
+            })
+            .state('app.jhs', {
                 url: '/jhs',
                 views: {
                     'menuContent': {
@@ -103,7 +114,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 }
             })
             .state('app.item', {
-                url: '/item/:id/:title/:price/:picUrl',
+                url: '/item/:id/:title/:price/:picUrl/:isziying',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/item.html',
@@ -129,13 +140,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                     }
                 }
             })
-
-
-            
             ;
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/jhs');
+        $urlRouterProvider.otherwise('/app/index');
     })
     .factory('Push', function() {
         var push;

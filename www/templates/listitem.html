@@ -1,0 +1,8 @@
+<a ng-repeat="product in data.results" class="item app-item col col-50" ui-sref="app.item({ id: product.itemId,title: product.name ,price: product.price.promo ,picUrl: product.img})"><img class="list-img" ng-src="http://{{product.img}}_200x200Q90.jpg_.webp" alt="">
+    <h2></i>{{product.name}}</h2>
+    <p class="list-price buy ">
+        <span class="price-new"><i>￥</i>{{product.price.promo}}</span>
+        <i class="del">￥{{product.price.original}}</i>
+        <span class="only-time">{{product.startDate | formatDate }}</span>
+    </p>
+</a>

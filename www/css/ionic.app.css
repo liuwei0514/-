@@ -1,4 +1,157 @@
 @charset "UTF-8";
+@font-face {
+  font-family: "iconfont";
+  src: url('http://at.alicdn.com/t/font_1439542878_2892206.eot');
+  /* IE9*/
+  src: url('http://at.alicdn.com/t/font_1439542878_2892206.eot?#iefix') format('embedded-opentype'), url('http://at.alicdn.com/t/font_1439542878_2892206.woff') format('woff'), url('http://at.alicdn.com/t/font_1439542878_2892206.ttf') format('truetype'), url('http://at.alicdn.com/t/font_1439542878_2892206.svg#iconfont') format('svg');
+  /* iOS 4.1- */ }
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale; }
+
+.icon-li:before {
+  content: "\e615"; }
+
+.icon-qing:before {
+  content: "\e618"; }
+
+.icon-qiang:before {
+  content: "\e619"; }
+
+.icon-te:before {
+  content: "\e61d"; }
+
+.icon-more:before {
+  content: "\e620"; }
+
+.icon-home:before {
+  content: "\e600"; }
+
+.icon-shang:before {
+  content: "\e601"; }
+
+.icon-weibo:before {
+  content: "\e621"; }
+
+.icon-zhekou:before {
+  content: "\e602"; }
+
+.icon-more1:before {
+  content: "\e622"; }
+
+.icon-home1:before {
+  content: "\e603"; }
+
+.icon-search:before {
+  content: "\e604"; }
+
+.icon-dui:before {
+  content: "\e605"; }
+
+.icon-search1:before {
+  content: "\e606"; }
+
+.icon-qq:before {
+  content: "\e623"; }
+
+.icon-user:before {
+  content: "\e607"; }
+
+.icon-shouji:before {
+  content: "\e608"; }
+
+.icon-back:before {
+  content: "\e628"; }
+
+.icon-ju:before {
+  content: "\e625"; }
+
+.icon-qq1:before {
+  content: "\e629"; }
+
+.icon-pinpaiqingcang:before {
+  content: "\e609"; }
+
+.icon-mima:before {
+  content: "\e60a"; }
+
+.icon-gengduo:before {
+  content: "\e60b"; }
+
+.icon-guanyu:before {
+  content: "\e60c"; }
+
+.icon-weibiaoti2:before {
+  content: "\e60d"; }
+
+.icon-gouwudai:before {
+  content: "\e60e"; }
+
+.icon-dui1:before {
+  content: "\e60f"; }
+
+.icon-error:before {
+  content: "\e610"; }
+
+.icon-shoucang:before {
+  content: "\e611"; }
+
+.icon-shoucang1:before {
+  content: "\e612"; }
+
+.icon-04:before {
+  content: "\e613"; }
+
+.icon-qiandao:before {
+  content: "\e614"; }
+
+.icon-error1:before {
+  content: "\e616"; }
+
+.icon-share:before {
+  content: "\e627"; }
+
+.icon-geren:before {
+  content: "\e617"; }
+
+.icon-taojin:before {
+  content: "\e62a"; }
+
+.icon-right:before {
+  content: "\e62d"; }
+
+.icon-weixin:before {
+  content: "\e62b"; }
+
+.icon-qiandao1:before {
+  content: "\e61a"; }
+
+.icon-guanyu1:before {
+  content: "\e61b"; }
+
+.icon-geren1:before {
+  content: "\e61c"; }
+
+.icon-9kuai9:before {
+  content: "\e61e"; }
+
+.icon-pengyou:before {
+  content: "\e62c"; }
+
+.icon-guanbitishi:before {
+  content: "\e61f"; }
+
+.icon-androidalarmclock:before {
+  content: "\e624"; }
+
+.icon-tishi:before {
+  content: "\e626"; }
+
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -7812,3 +7965,24 @@ a.button {
     background-color: red;
     padding: 0.2em;
     color: white; }
+
+.app-index .index-ad {
+  line-height: 1px; }
+  .app-index .index-ad img {
+    width: 100%;
+    margin: 0;
+    padding: 0; }
+.app-index .index-divider {
+  background: url(../img/index-divider.png) 50% 50% no-repeat #f4f4f4;
+  background-size: 70%;
+  height: 50px; }
+
+.item-img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display: block; }
+  .item-img img {
+    max-height: 100%;
+    cursor: pointer; }

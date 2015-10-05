@@ -1,9 +1,10 @@
-var urlRoot = "http://data.800-taobao.com/api/v2";
-// var urlRoot = "http://127.0.0.1:3000/api/v2";
+// var urlRoot = "http://data.800-taobao.com/api/v2";
+var urlRoot = "http://127.0.0.1:3000/api/v2";
 var urlJhs = urlRoot + "/jhs";
 var urlQiang = urlRoot + "/qiang";
 var urlQing = urlRoot + "/qing";
 var urlTejia = urlRoot + "/tejia";
+var urlZiying = urlRoot + "/ziying";
 var urlJhsCategories = urlRoot + "/jhscategories";
 var urlQiangCategories = urlRoot + "/qiangcategories";
 var urlQingCategories = urlRoot + "/qingcategories";
@@ -13,23 +14,22 @@ var urlRewards = urlRoot + "/Reward";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $interval, $http,$ionicPlatform,$state) {
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http, $ionicPlatform, $state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    $scope.$on('$ionicView.enter', function(e,state) {
+    $scope.$on('$ionicView.enter', function(e, state) {
         console.log(state);
         $ionicPlatform.ready(function() {
-            window.plugins.TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
+            // window.plugins.TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
         });
     });
 
     // $scope.$watch('loginForm.loginTel.$valid', function(validity) {
     //     $scope.loginData.captchaDisabled = !validity;
     // });
-
 
     // Form data for the login modal
     $scope.loginData = {
@@ -70,7 +70,6 @@ angular.module('starter.controllers', ['ngSanitize'])
         }, 1000, 61);
     };
 
-
     $scope.$watch('loginData.captcha', function() {
         if ($scope.loginData.captcha) {
             if ($scope.loginData.captchaValue == $scope.loginData.captcha && $scope.loginData.tel && $scope.loginData.taobaoid)
@@ -104,11 +103,38 @@ angular.module('starter.controllers', ['ngSanitize'])
             $scope.closeLogin();
         }).
         error(function(data, status, headers, config) {
-            //
+            $ionicPopup.alert({
+                title: '出错',
+                template: data
+            });
         });
-
     };
 })
+
+.controller('IndexCtrl', function($scope, $http, $state) {
+    $scope.appUser = JSON.parse(localStorage["appUser"]);
+    $scope.title = $scope.appUser.taobaoid;
+    $scope.data = [];
+
+    $http.get(urlQiang).success(function(data, status, headers, config) {
+        $scope.data['qiang'] = data;
+    }).error(function(data, status, headers, config) {
+        //
+    })
+
+    $http.get(urlJhs).success(function(data, status, headers, config) {
+        $scope.data['jhs'] = data;
+    }).error(function(data, status, headers, config) {
+        //
+    })
+
+    $http.get(urlQing).success(function(data, status, headers, config) {
+        $scope.data['qing'] = data;
+    }).error(function(data, status, headers, config) {
+        //
+    })
+})
+
 
 .controller('TaobaoidCtrl', function($scope, $stateParams, $ionicPopup, $http) {
         $scope.createUser = function(taobaoid) {
@@ -128,16 +154,15 @@ angular.module('starter.controllers', ['ngSanitize'])
                 //
             });
         };
-
     })
-    .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http,$ionicActionSheet) {
+    .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http, $ionicActionSheet) {
         $scope.appUser = JSON.parse(localStorage["appUser"]);
         $http.get(urlRewards + "/" + $scope.appUser._id).
         success(function(data, status, headers, config) {
             var rewards = data.rewards;
             var now = new Date();
             var year = now.getFullYear();
-            var month = now.getMonth()+2;
+            var month = now.getMonth() + 2;
             var reward = {
                 "amount": 0,
                 "month": month,
@@ -152,7 +177,7 @@ angular.module('starter.controllers', ['ngSanitize'])
         });
 
 
-        $scope.shareUrl = "http://800-taobao.com/wx/index.html#"+$scope.appUser._id;
+        $scope.shareUrl = "http://800-taobao.com/wx/index.html#" + $scope.appUser._id;
         $scope.title = "看到";
         $scope.description = "“看到”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买。";
         // $scope.description = "";
@@ -182,7 +207,7 @@ angular.module('starter.controllers', ['ngSanitize'])
                         }, function(reason) {
                             console.log(reason);
                         });
-                        
+
                     }
                     if (index == 1) {
                         WeChat.share({
@@ -214,6 +239,7 @@ angular.module('starter.controllers', ['ngSanitize'])
     $scope.price = $stateParams.price;
     $scope.itemUrl = $sce.trustAsResourceUrl("http://h5.m.taobao.com/awp/core/detail.htm?id=" + $stateParams.id);
     $scope.picUrl = $sce.trustAsResourceUrl($stateParams.picUrl);
+    $scope.hideimg = $stateParams.isziying;
 
 
     $scope.encodeImageUri = function(imageUri) {
@@ -231,9 +257,10 @@ angular.module('starter.controllers', ['ngSanitize'])
     }
 
     $scope.appUser = JSON.parse(localStorage["appUser"]);
-    $scope.shareUrl = "http://800-taobao.com/wx/index.html#"+$scope.appUser._id;
+    $scope.shareUrl = "http://800-taobao.com/wx/index.html#" + $scope.appUser._id;
     $scope.shareTitle = "看到";
     $scope.description = "“看到”app是一款网购人群分享购物心得和购物信息的互动性APP，为APP使用者提供有效的购物信息。并集成了各大购物平台的打折促销商品，方便使用者购买。";
+
 
     $scope.show = function() {
         // Show the action sheet
@@ -282,12 +309,62 @@ angular.module('starter.controllers', ['ngSanitize'])
 
 })
 
+
 .controller('GerenCtrl', function($scope, $http, $state) {
     var appUser = window.localStorage.getItem("appUser");
     if (!appUser == true) {
         $scope.login();
     }
 })
+
+
+
+.controller('ZiyingCtrl', function($scope, $http, $state) {
+    $scope.title = "特权商品";
+    $scope.data = {};
+    $scope.data.next = 0;
+    $scope.data.results = [];
+
+    $scope.doRefresh = function() {
+            $http.get(urlZiying).success(function(data, status, headers, config) {
+                $scope.data = data;
+            }).error(function(data, status, headers, config) {
+                //
+            })
+            .finally(function() {
+                // 停止广播ion-refresher
+                $scope.$broadcast('scroll.refreshComplete');
+            });
+
+    };
+
+    $scope.loadMore = function() {
+        $scope.nextPage(function() {
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        });
+    };
+
+    $scope.nextPage = function(cb) {
+        if ($scope.data.next===false) {
+        }else{
+            $http.get(urlZiying + "?page=" + $scope.data.next).success(function(data, status, headers, config) {
+                $scope.data.previous = data.previous;
+                $scope.data.next = data.next;
+                $scope.data.first = data.first;
+                $scope.data.last = data.last;
+                $scope.data.results = $scope.data.results.concat(data.results);
+            }).
+            error(function(data, status, headers, config) {}).
+            finally(function() {
+                if (cb) {
+                    cb();
+                }
+            });
+        }
+    };
+
+})
+
 
 .controller('HomeCtrl', function($scope, $http, $ionicScrollDelegate, $stateParams, $location, $ionicSlideBoxDelegate, $state) {
     $scope.title = "聚划算";

@@ -1,0 +1,47 @@
+<ion-view class="app-index" view-title="{{title}}" class="app-index">
+    <ion-content>
+        <div class="index-ad"><img src="img/index-ad.jpg" ui-sref="app.ziying()"></div>
+        <div class="index-divider"></div>
+        <div class="index-products">
+            <div class="app-lists list">
+                <a ng-repeat="product in data['jhs'].results" class="item app-item col col-50" ui-sref="app.item({ id: product.baseinfo.itemId,title: product.name.title ,price: product.price.actPrice,picUrl: product.baseinfo.picUrl })"><img class="list-img" ng-src="http://{{product.baseinfo.picUrl}}_200x200Q90.jpg_.webp" alt="">
+                    <h2></i>{{product.name.title}}</h2>
+                    <p class="list-price buy ">
+                        <span class="price-new"><i>￥</i>{{product.price.actPrice}}</span>
+                        <i class="del">￥{{product.price.origPrice}}</i>
+                        <span class="only-time">{{product.price.ostime | formatDate }}</span>
+                    </p>
+                </a>
+                <a ng-repeat="product in data['qiang'].results" class="item app-item col col-50" ui-sref="app.item({ id: product.itemId,title: product.name ,price: product.price.promo ,picUrl: product.img})"><img class="list-img" ng-src="http://{{product.img}}_200x200Q90.jpg_.webp" alt="">
+                    <h2></i>{{product.name}}</h2>
+                    <p class="list-price buy ">
+                        <span class="price-new"><i>￥</i>{{product.price.promo}}</span>
+                        <i class="del">￥{{product.price.original}}</i>
+                        <span class="only-time">{{product.startDate | formatDate }}</span>
+                    </p>
+                </a>
+                <a ng-repeat="product in data['qing'].results" class="item app-item col col-50" ui-sref="app.item({ id: product.baseinfo.itemId,title: product.name.title ,price: product.price.actPrice,picUrl: product.baseinfo.picUrl })"><img class="list-img" ng-src="http://{{product.baseinfo.picUrl}}_200x200Q90.jpg_.webp" alt="">
+                    <h2></i>{{product.name.title}}</h2>
+                    <p class="list-price buy ">
+                        <span class="price-new"><i>￥</i>{{product.price.actPrice}}</span>
+                        <i class="del">￥{{product.price.origPrice}}</i>
+                        <span class="only-time">{{product.price.ostime | formatDate }}</span>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+
+
+    <div class="tabs tabs-icon-left">
+        <a class="tab-item" ui-sref="app.rewards()"  menu-close >
+            <i class="icon iconfont icon-home"></i>首页
+        </a>
+        <a class="tab-item" ui-sref="app.ziying()"  menu-close >
+            <i class="icon iconfont icon-te"></i>特权商品
+        </a>
+        <a class="tab-item" ui-sref="app.rewards()"  menu-close >
+            <i class="icon iconfont icon-taojin"></i>账号余额
+        </a>
+    </div>
+</ion-view>
