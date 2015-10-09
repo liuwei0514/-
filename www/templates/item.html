@@ -1,9 +1,9 @@
 <ion-view cache-view="false" view-title="{{title}}">
+    <div class="item-img backdrop visible active" ng-show="hideimg" ng-click="hideimg=0;">
+    	<img src="https://img.alicdn.com/imgextra/i4/2066051344/TB2d7hCfVXXXXbFXpXXXXXXXXXX_!!2066051344.jpg" alt="">
+    </div>
     <ion-content>
-    	<div class="item-img" ng-show="hideimg" ng-click="hideimg=0;" ><img src="https://img.alicdn.com/imgextra/i4/2066051344/TB2d7hCfVXXXXbFXpXXXXXXXXXX_!!2066051344.jpg" alt="">
-        </div>
-
-    	<iframe class="app-item-iframe" ng-style="appItemIframeStyle" ng-src="{{itemUrl}}" class="app-item-iframe" frameborder="0"></iframe>
+        <iframe class="app-item-iframe" ng-style="appItemIframeStyle" ng-src="{{itemUrl}}" class="app-item-iframe" frameborder="0"></iframe>
     </ion-content>
     <div class="bar bar-footer">
         <button ng-click="$ionicGoBack()" class="button button-large pull-left ion-android-arrow-back"></button>

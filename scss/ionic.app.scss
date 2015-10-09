@@ -452,7 +452,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     text-align: center;
     display: block;
     img{
-        max-height:100%;
+        max-height:60%;
+        margin-top: 30%;
         cursor: pointer;
     }
 }

@@ -1,30 +1,38 @@
 <ion-view class="app-rewards" view-title="账号余额">
-    <ion-content >
+    <ion-content>
         <div class="app-rewards-color">
             <h4 class="title">您已领取的返利余额</h4>
             <div>
                 <span>12.5</span>元
+            </div>
+            <div>
+                <button ng-click="zralipay()" class="button button-small button-assertive">
+                    转入支付宝
+                </button>
             </div>
         </div>
         <div class="app-rewards-list">
             <div class="app-rewards-title">
                 账户列表
             </div>
-            <div class="row" ng-repeat="reward in rewards | orderBy:'month'" >
+            <div class="row" ng-repeat="reward in rewards | orderBy:'month'">
                 <div class="col col-33">{{reward.year}}.{{reward.month}}</div>
                 <div class="col col-33">{{reward.amount}}元</div>
                 <div class="col col-33"><span class="row-{{reward.type}}">{{reward.type === "valid" ? "已领取":""}}{{reward.type === "expired" ? "已过期":""}}{{reward.type === "invalid" ? "未结算":""}}</span></div>
             </div>
+            <br> 
+            <br> 
+            <br> 
         </div>
     </ion-content>
     <div class="tabs tabs-icon-left">
-        <a class="tab-item" ui-sref="app.rewards()"  menu-close >
+        <a class="tab-item" ui-sref="app.rewards()" menu-close>
             <i class="icon iconfont icon-taojin"></i>账号余额
         </a>
-        <a class="tab-item" ui-sref="app.ziying()"  menu-close >
+        <a class="tab-item" ui-sref="app.ziying()" menu-close>
             <i class="icon iconfont icon-te"></i>特权商品
         </a>
-        <a class="tab-item" ng-click="show()"  menu-close >
+        <a class="tab-item" ng-click="show()" menu-close>
             <i class="icon iconfont icon-share"></i>好友分享
         </a>
     </div>

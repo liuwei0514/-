@@ -11,34 +11,28 @@ var urlQingCategories = urlRoot + "/qingcategories";
 var urlTejiaCategories = urlRoot + "/tejiacategories";
 var urlCreateUser = urlRoot + "/AppUser";
 var urlRewards = urlRoot + "/Reward";
+var urlSendCaptcha = urlRoot + "/sendCaptcha";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $interval, $http, $ionicPlatform, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http,$ionicPopup, $ionicPlatform, $state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     $scope.$on('$ionicView.enter', function(e, state) {
-        console.log(state);
         $ionicPlatform.ready(function() {
-            // window.plugins.TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
+            window.plugins.TalkingData.trackEventWithParameters("pageview", state.stateName, state.stateParams);
         });
     });
 
-    // $scope.$watch('loginForm.loginTel.$valid', function(validity) {
-    //     $scope.loginData.captchaDisabled = !validity;
-    // });
-
-    // Form data for the login modal
     $scope.loginData = {
         captchaText: "获取验证码",
         waiting: false,
         waitingTime: 0
     };
 
-    // Create the login modal that we will use later
     $ionicModal.fromTemplateUrl('templates/login.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -47,6 +41,9 @@ angular.module('starter.controllers', ['ngSanitize'])
         var appUser = window.localStorage.getItem("appUser");
         if (!appUser == true) {
             $scope.login();
+        }else{
+            $scope.appUser = JSON.parse(window.localStorage.getItem("appUser"));
+            $scope.rewards = JSON.parse(window.localStorage.getItem("rewards"));
         }
     });
 
@@ -58,6 +55,20 @@ angular.module('starter.controllers', ['ngSanitize'])
     $scope.sendCaptcha = function() {
         $scope.loginData.waiting = true;
         $scope.loginData.waitingTime = 60;
+
+        // $http.post(urlSendCaptcha, {
+        //     tel: $scope.loginData.tel
+        // }).
+        // success(function(data, status, headers, config) {
+        //     $scope.loginData.captchaValue = data.captcha;
+        // }).
+        // error(function(data, status, headers, config) {
+        //     $ionicPopup.alert({
+        //         title: '验证码发送出错，请稍后重试',
+        //         template: '验证码发送出错，请稍后重试'
+        //     });
+        // });
+
         $scope.loginData.captchaValue = 1111;
         $interval(function() {
             if ($scope.loginData.waitingTime > 0) {
@@ -96,11 +107,13 @@ angular.module('starter.controllers', ['ngSanitize'])
             console.log(data);
             localStorage["appUser"] = JSON.stringify(data.appUser);
             localStorage["rewards"] = JSON.stringify(data.rewards);
-            $state.go("app.rewards");
+            $scope.appUser = data.appUser;
+            $scope.rewards = data.rewards;
+            $scope.closeLogin();
+            // $state.go("app.index");
             // var cars = JSON.parse(localStorage["mycars"]);
             // $scope.appUser = data.appUser;
             // $scope.rewards = data.rewards;
-            $scope.closeLogin();
         }).
         error(function(data, status, headers, config) {
             $ionicPopup.alert({
@@ -112,8 +125,6 @@ angular.module('starter.controllers', ['ngSanitize'])
 })
 
 .controller('IndexCtrl', function($scope, $http, $state) {
-    $scope.appUser = JSON.parse(localStorage["appUser"]);
-    $scope.title = $scope.appUser.taobaoid;
     $scope.data = [];
 
     $http.get(urlQiang).success(function(data, status, headers, config) {
@@ -156,6 +167,14 @@ angular.module('starter.controllers', ['ngSanitize'])
         };
     })
     .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http, $ionicActionSheet) {
+
+        $scope.zralipay = function(){
+            $ionicPopup.alert({
+                title: '提现失败',
+                template: "最低提现金额是50，您的账号余额暂时还不满50."
+            });
+        }
+
         $scope.appUser = JSON.parse(localStorage["appUser"]);
         $http.get(urlRewards + "/" + $scope.appUser._id).
         success(function(data, status, headers, config) {
