@@ -1,0 +1,11 @@
+{
+    "android": {
+        "release": {
+            "keystore": "/Users/Leslie/projects/android-release-key.keystore",
+            "storePassword": "google.com",
+            "alias": "leslieliu",
+            "password": "google.com",
+            "keystoreType": ""
+        }
+    }
+}

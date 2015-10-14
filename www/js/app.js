@@ -32,7 +32,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         if (window.cordova && window.cordova.plugins.Keyboard) {
             window.plugins.jPushPlugin.init();
             window.plugins.TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
-            window.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            // window.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             window.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {

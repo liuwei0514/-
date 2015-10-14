@@ -15,7 +15,7 @@ var urlSendCaptcha = urlRoot + "/sendCaptcha";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $interval, $http,$ionicPopup, $ionicPlatform, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http, $ionicPopup, $ionicPlatform, $state) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -41,7 +41,7 @@ angular.module('starter.controllers', ['ngSanitize'])
         var appUser = window.localStorage.getItem("appUser");
         if (!appUser == true) {
             $scope.login();
-        }else{
+        } else {
             $scope.appUser = JSON.parse(window.localStorage.getItem("appUser"));
             $scope.rewards = JSON.parse(window.localStorage.getItem("rewards"));
         }
@@ -168,7 +168,7 @@ angular.module('starter.controllers', ['ngSanitize'])
     })
     .controller('RewardsCtrl', function($scope, $stateParams, $ionicPopup, $http, $ionicActionSheet) {
 
-        $scope.zralipay = function(){
+        $scope.zralipay = function() {
             $ionicPopup.alert({
                 title: '提现失败',
                 template: "最低提现金额是50，您的账号余额暂时还不满50."
@@ -215,32 +215,45 @@ angular.module('starter.controllers', ['ngSanitize'])
                 },
                 buttonClicked: function(index) {
                     if (index == 0) {
-                        // WeChat.isInstalled(function(isInstalled) {
-                        // navigator.notification.alert(installed);
-                        WeChat.share({
-                            title: $scope.title,
-                            description: $scope.description,
-                            url: $scope.shareUrl
-                        }, WeChat.Scene.session, function() {
+
+                        Wechat.share({
+                            message: {
+                                title: $scope.title,
+                                description: $scope.description,
+                                // thumb: "www/img/thumbnail.png",
+                                media: {
+                                    type: Wechat.Type.LINK,
+                                    webpageUrl: $scope.shareUrl
+                                }
+                            },
+                            scene: Wechat.Scene.SESSION // share to Timeline
+                        }, function() {
                             // navigator.notification.alert('分享成功~');
                         }, function(reason) {
-                            console.log(reason);
+                            alert("Failed: " + reason);
                         });
 
                     }
                     if (index == 1) {
-                        WeChat.share({
-                            title: $scope.title,
-                            description: $scope.description,
-                            url: $scope.shareUrl
-                        }, WeChat.Scene.timeline, function() {
+
+                        Wechat.share({
+                            message: {
+                                title: $scope.title,
+                                description: $scope.description,
+                                // thumb: "www/img/thumbnail.png",
+                                media: {
+                                    type: Wechat.Type.LINK,
+                                    webpageUrl: $scope.shareUrl
+                                }
+                            },
+                            scene: Wechat.Scene.TIMELINE // share to Timeline
+                        }, function() {
                             // navigator.notification.alert('分享成功~');
                         }, function(reason) {
-                            console.log(reason);
+                            alert("Failed: " + reason);
                         });
                     }
                     return true;
-
                 }
             });
         };
@@ -296,27 +309,42 @@ angular.module('starter.controllers', ['ngSanitize'])
             },
             buttonClicked: function(index) {
                 if (index == 0) {
-                    // WeChat.isInstalled(function(isInstalled) {
-                    // navigator.notification.alert(installed);
-                    WeChat.share({
-                        title: $scope.shareTitle,
-                        description: $scope.description,
-                        url: $scope.shareUrl
-                    }, WeChat.Scene.session, function() {
-                        // navigator.notification.alert('分享成功~');
-                    }, function(reason) {
-                        console.log(reason);
-                    });
+
+                        Wechat.share({
+                            message: {
+                                title: $scope.title,
+                                description: $scope.description,
+                                // thumb: "www/img/thumbnail.png",
+                                media: {
+                                    type: Wechat.Type.LINK,
+                                    webpageUrl: $scope.shareUrl
+                                }
+                            },
+                            scene: Wechat.Scene.SESSION // share to Timeline
+                        }, function() {
+                            // navigator.notification.alert('分享成功~');
+                        }, function(reason) {
+                            console.log("Failed: " + reason);
+                        });
+
                 }
                 if (index == 1) {
-                    WeChat.share({
-                        title: $scope.shareTitle,
-                        description: $scope.description,
-                        url: $scope.shareUrl
-                    }, WeChat.Scene.timeline, function() {
+
+                    Wechat.share({
+                        message: {
+                            title: $scope.title,
+                            description: $scope.description,
+                            // thumb: "www/img/thumbnail.png",
+                            media: {
+                                type: Wechat.Type.LINK,
+                                webpageUrl: $scope.shareUrl
+                            }
+                        },
+                        scene: Wechat.Scene.TIMELINE // share to Timeline
+                    }, function() {
                         // navigator.notification.alert('分享成功~');
                     }, function(reason) {
-                        console.log(reason);
+                        console.log("Failed: " + reason);
                     });
                 }
                 return true;
@@ -345,7 +373,7 @@ angular.module('starter.controllers', ['ngSanitize'])
     $scope.data.results = [];
 
     $scope.doRefresh = function() {
-            $http.get(urlZiying).success(function(data, status, headers, config) {
+        $http.get(urlZiying).success(function(data, status, headers, config) {
                 $scope.data = data;
             }).error(function(data, status, headers, config) {
                 //
@@ -364,8 +392,7 @@ angular.module('starter.controllers', ['ngSanitize'])
     };
 
     $scope.nextPage = function(cb) {
-        if ($scope.data.next===false) {
-        }else{
+        if ($scope.data.next === false) {} else {
             $http.get(urlZiying + "?page=" + $scope.data.next).success(function(data, status, headers, config) {
                 $scope.data.previous = data.previous;
                 $scope.data.next = data.next;
