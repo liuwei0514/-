@@ -4,14 +4,17 @@
             <div class="app-login-logo">
                 <img src="img/taobaoid.png" alt="">
             </div>
+            <!-- 升级后 <br>
+            升级后 <br>
+            升级后 <br> -->
             <form ng-submit="doLogin()" name="loginForm" class="app-login-form">
                 <input type="text" ng-model="loginData.taobaoid" name="taobaoid" ng-required="true" class="app-login-form-input" placeholder="请输入您的淘宝账号">
                 <input type="tel" name="loginTel" ng-model="loginData.tel" ng-required="true" class="app-login-form-input" ng-pattern="/^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/" placeholder="请输入您的手机号码">
-                <button class="" ng-disabled="!loginForm.loginTel.$valid || loginData.waiting" ng-click="sendCaptcha()">
+                <button class="button-sendcaptcha" ng-disabled="!loginForm.loginTel.$valid || loginData.waiting" ng-click="sendCaptcha()">
                     {{loginData.captchaText}}
                 </button>
                 <input type="number" name="loginCaptcha" placeholder="请输入您的验证码" class="app-login-form-input" ng-model="loginData.captcha" ng-required="true">
-                <button class="" ng-disabled="!loginData.passCorrect" type="submit">点击确认</button>
+                <button class="button button-balanced" ng-disabled="!loginData.passCorrect" type="submit">点击确认</button>
             </form>
             <!-- <form ng-submit="doLogin()" name="loginForm">
                 <div class="list">

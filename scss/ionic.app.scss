@@ -382,7 +382,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
             font-size: 1em;
             margin: 0.5em 10%;
         }
-        button {
+        .button-sendcaptcha {
             background-color: none;
             line-height: 2em;
             font-size: 1.3em;
@@ -391,7 +391,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
             background: none;
             border: 0;
         }
-        button:disabled {
+        .button-sendcaptcha:disabled {
             color: #ccc;
         }
         .btn-submit{
@@ -460,3 +460,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         cursor: pointer;
     }
 }
+
+
+  .iframe-issue {
+    -webkit-overflow-scrolling: touch !important;
+    overflow: scroll !important;
+  }

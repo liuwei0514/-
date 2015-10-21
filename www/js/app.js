@@ -4,10 +4,22 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic.service.core','ngCordova', 'ionic.service.deploy'])
 
+.config(['$ionicAppProvider', function($ionicAppProvider) {
+    // Identify app
+    $ionicAppProvider.identify({
+        // Your App ID
+        app_id: 'kandao',
+        // The public API key services will use for this app
+        api_key: '***',
+        domain: 'http://data.800-taobao.com',
+        channel_tag: ''
+        // Your GCM sender ID/project number (Uncomment if supporting Android)
+        //gcm_id: 'YOUR_GCM_ID'
+    });
+}])
 .run(function($ionicPlatform, Push) {
-
 
     // push notification callback
     var notificationCallback = function(data) {
@@ -24,6 +36,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
 
     $ionicPlatform.ready(function() {
+        window.localStorage["hasChecked"] = 0;
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         //初始化
@@ -31,9 +44,9 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
         if (window.cordova && window.cordova.plugins.Keyboard) {
             window.plugins.jPushPlugin.init();
-            window.plugins.TalkingData.init ("D33E7E07DEEA08CE05415EED9A432362", "kandao");
-            // window.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            window.plugins.Keyboard.disableScroll(true);
+            window.plugins.TalkingData.init("D33E7E07DEEA08CE05415EED9A432362", "kandao");
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
@@ -144,8 +157,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/index');
-    })
-    .factory('Push', function() {
+})
+.factory('Push', function() {
         var push;
         return {
             setBadge: function(badge) {
@@ -187,4 +200,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 }
             }
         };
-    });
+})
+;

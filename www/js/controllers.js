@@ -15,7 +15,48 @@ var urlSendCaptcha = urlRoot + "/sendCaptcha";
 
 angular.module('starter.controllers', ['ngSanitize'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $interval, $http, $ionicPopup, $ionicPlatform, $state) {
+.controller('AppCtrl', function($scope, $ionicModal, $interval, $http, $ionicPopup, $ionicPlatform, $state, $ionicDeploy) {
+
+    var hasChecked = window.localStorage.getItem("hasChecked");
+    if (!hasChecked) {
+        $ionicPlatform.ready(function() {
+            $ionicDeploy.check().then(function(hasUpdate) {
+                if(hasUpdate){
+                    window.localStorage["hasChecked"] = 1;
+                    navigator.notification.confirm(
+                        '有新版本,请升级!', // message
+                        $scope.onConfirm, // callback to invoke with index of button pressed
+                        'APP升级', // title
+                        '确定' // buttonLabels
+                    );    
+                }
+            }, function(err) {
+                console.error('Unable to check for updates:', err);
+            });
+        });
+    }
+
+    $scope.onConfirm = function(button) {
+
+        $ionicDeploy.update().then(function(res) {
+            alert('升级成功');
+        }, function(err) {
+            console.log('升级失败', err);
+        }, function(prog) {
+            console.log('升级中', prog);
+        });
+
+        var alertPopup = $ionicPopup.alert({
+            title: '升级中',
+            template: '升级中，请勿关闭APP！'
+        });
+        alertPopup.then(function(res) {
+            $ionicPopup.alert({
+                title: '升级中',
+                template: '升级中，请勿关闭APP！'
+            });
+        });
+    }
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -310,22 +351,22 @@ angular.module('starter.controllers', ['ngSanitize'])
             buttonClicked: function(index) {
                 if (index == 0) {
 
-                        Wechat.share({
-                            message: {
-                                title: $scope.title,
-                                description: $scope.description,
-                                // thumb: "www/img/thumbnail.png",
-                                media: {
-                                    type: Wechat.Type.LINK,
-                                    webpageUrl: $scope.shareUrl
-                                }
-                            },
-                            scene: Wechat.Scene.SESSION // share to Timeline
-                        }, function() {
-                            // navigator.notification.alert('分享成功~');
-                        }, function(reason) {
-                            console.log("Failed: " + reason);
-                        });
+                    Wechat.share({
+                        message: {
+                            title: $scope.title,
+                            description: $scope.description,
+                            // thumb: "www/img/thumbnail.png",
+                            media: {
+                                type: Wechat.Type.LINK,
+                                webpageUrl: $scope.shareUrl
+                            }
+                        },
+                        scene: Wechat.Scene.SESSION // share to Timeline
+                    }, function() {
+                        // navigator.notification.alert('分享成功~');
+                    }, function(reason) {
+                        console.log("Failed: " + reason);
+                    });
 
                 }
                 if (index == 1) {
@@ -433,7 +474,7 @@ angular.module('starter.controllers', ['ngSanitize'])
         $scope.url = urlQiang;
         $scope.title = "淘抢购";
         $scope.urlListitem = "listitemqiang";
-        $scope.appNndexNavWidth = 400;
+        $scope.appNndexNavWidth = 500;
     }
     if ($state.current.name == "app.tejia") {
         $scope.urlCategories = urlTejiaCategories;
